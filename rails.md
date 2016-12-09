@@ -14,7 +14,9 @@ Referências em português:
 - <http://www.maujor.com/railsgirlsguide/>
 - <https://www.caelum.com.br/apostila-ruby-on-rails/> (um pouco antigo)
 
-## Configurando o ambiente
+Neste guia, mostrarei como criar e colocar no ar um projeto Rails. A seguir, instruções para dois ambientes de programação online, o [Cloud9](https://c9.io/) e o [Codeanywhere](https://codeanywhere.com/).
+
+## Configurando o ambiente Cloud9
 
 Nesta aula vamos usar um ambiente de programação totalmente online, o [Cloud9](https://c9.io/).
 
@@ -43,12 +45,49 @@ O Cloud9 possui 3 painéis:
 - baixo: terminal do Linux
 - centro: editor de código-fonte
 
+## Configurando o ambiente Codeanywhere (alternativa)
+
+Uma alternativa ao Cloud9 é o [Codeanywhere](https://codeanywhere.com/). 
+
+### Primeiramente, crie um ambiente (workspace)
+
+- Entre em <https://codeanywhere.com/>
+- Crie uma conta (ou entre com sua conta do GitHub)
+- Crie um novo projeto
+    - En *name*, digite `mata62`.
+    - No Connection Wizard, em Containers, escolha Ruby / Ubuntu
+
+Esse ambiente pode ser usado para mais de um projeto durante a disciplina.
+
+### Conhecendo o editor
+
+O Codeanywhere possui 2 painéis:
+
+- esquerda: navegador de arquivos
+- direita: terminal do Linux, código-fonte etc.
+
+O painel da direita pode ser subdivido. Para isso, clique no menu View > Layout > Rows: 2. Então arraste o terminal (primeira aba) para o painel de baixo.
+
+### Configurando o editor
+
+O Codeanywhere vem com uma versão antiga do Ruby. Para atualizar, rode os seguintes comandos:
+
+```bash
+sudo apt-get update
+sudo apt-get install libxslt-dev libxml2-dev zlib1g-dev libgmp3-dev
+rvm install 2.3.0
+rvm --default use 2.3.0
+gem install rails
+```
+
 ## Criando um projeto rails
 
 Clique no terminal e digite o seguinte:
 
     rails new meuapp
     cd meuapp
+
+(Se o comando `rails` não funcionar, instale-o com o comando `gem install rails`.)
 
 A primeira linha executa o comando `rails`, que automatiza diversas tarefas durante o desenvolvimento de uma aplicação Rails. Em especial, o comando `rails new` cria uma aplicação Rails em um novo diretório com o nome fornecido.
 
@@ -65,15 +104,21 @@ Note que o diretório `meuapp` agora aparece no navegador de arquivos (painel à
 
 Clique no terminal e certifique-se que o diretório atual é o diretório `meuapp` que você criou (você pode usar o comando `pwd` pra isso).
 
-Digite o seguinte comando:
+Se estiver usando o Cloud9, digite o seguinte comando:
 
     rails server -b $IP -p $PORT
+
+Se estiver usando o Codeanywhere, digite o seguinte comando:
+
+    rails server -b 0.0.0.0 -p 3000
 
 Esse comando inicia um servidor web para sua aplicação que pode ser acessível pelo IP `$IP` e porta `$PORT`. Normalmente você só precisa digitar `rails server` para rodar o servidor; o `-b $IP -p $PORT` permite que alteremos o IP e a porta do servidor para os valores que o Cloud9 precisa.
 
 (Note que o comando `rails` não vem por padrão na maioria das distribuições Linux, o que significa que normalmente você precisa instalar o Rails antes de começar a trabalhar. No template que escolhemos ao criar o ambiente, no entanto, o Rails já vem instalado.)
 
-Para acessar a aplicação, clique no botão "Preview", ao lado do menu. Isso vai abrir uma aba de um navegador no endereço `https://mata62-USER.c9users.io/`, onde `USER` é seu nome de usuário no Cloud9. Você pode acessar esse site de qualquer navegador conectado à Internet.
+**Cloud9**. Para acessar a aplicação, clique no botão "Preview", ao lado do menu. Isso vai abrir uma aba de um navegador no endereço `https://mata62-USER.c9users.io/`, onde `USER` é seu nome de usuário no Cloud9. Você pode acessar esse site de qualquer navegador conectado à Internet.
+
+**Codeanywhere**. Para acessar a aplicação, abra uma aba do navegador no endereço <http://port-3000.<PROJETO>-<USERNAME>.codeanyapp.com/>, onde `<PROJETO>` é o nome do projeto que você criou e `<USERNAME>` é o seu nome de usuário.
 
 **Parando a aplicação**. Para fechar o servidor web, clique no terminal onde o servidor está rodando e pressione Ctrl+C. Se você tentar acessar sua aplicação, ela não estará mais rodando.
 
@@ -139,13 +184,21 @@ Heroku é um provedor de nuvem do tipo plataforma como serviço (platform as a s
 
 **Adaptando a aplicação**. A nossa aplicação está originalmente configurada para usar o banco de dados SQLite, mas esse banco de dados não está disponível no Heroku; no lugar dele, vamos usar o banco de dados PostgreSQL. Para isso, altere o arquivo Gemfile para ficar da seguinte forma:
 
-    group :development, :test do
-      gem 'sqlite3'
-      # ...
-    end
-    group :production do
-      gem 'pg'
-    end
+```ruby
+group :development, :test do
+  gem 'sqlite3'
+  # ...
+end
+group :production do
+  gem 'pg'
+end
+```
+
+A seguir, rode o seguinte comando para atualizar as dependências
+
+```bash
+bundle install --without production
+```
 
 A seguir, faça um *commit* das suas modificações:
 
@@ -161,6 +214,8 @@ O template "Rails tutorial" já vem com o [Heroku CLI](https://devcenter.heroku.
 Acesse o terminal do seu ambiente de desenvolvimento e digite:
 
     heroku login
+
+(Se o comando `heroku` não funcionar, instale-o com o comando `gem install heroku`.)
 
 Digite suas credenciais. A seguir, digite:
 
