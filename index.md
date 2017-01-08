@@ -27,8 +27,9 @@ Assunto e material:
   - [Guia do Scrum (pt-BR)](http://www.scrumguides.org/docs/scrumguide/v2016/2016-Scrum-Guide-Portuguese-Brazilian.pdf)
   - [Slides](http://slides.com/rodrigorgs/scrum)
 - Histórias do usuário
-  - [Interagindo com o cliente](https://rodrigorgs.github.io/mata62/cliente.html)
+  - [Slides: user stories](http://slides.com/rodrigorgs/user-stories)
   - [User stories - O que são? Como Usar?](http://blog.myscrumhalf.com/2011/10/user-stories-o-que-sao-como-usar/)
+  - [Interagindo com o cliente](https://rodrigorgs.github.io/mata62/cliente.html)
 
 # Material de aula
 
