@@ -10,6 +10,8 @@ Ver <http://guides.rubyonrails.org/active_record_basics.html>
 Criação do modelo
 =================
 
+Nos exemplos a seguir, linhas começadas por `$` são comandos que devem ser executados no terminal do Linux. Linhas começadas por `>` são comandos do rails console.
+
 ```
 $ rails generate model disciplina codigo:string nome:string
 $ cat app/models/disciplina.rb
@@ -73,9 +75,11 @@ $ rails console
 Outros exemplos:
 
 ```
-validates :codigo, length: { is: 6 }
-validates :nome, length: { minimum: 3, maximum: 60 }
-validates :codigo, uniqueness: true
+    # app/models/disciplina.rb
+    class Disciplina < ApplicationRecord
+      validates :codigo, presence: true, length: { is: 6 }, uniqueness: true
+      validates :nome, length: { minimum: 3, maximum: 60 }
+    end
 ```
 
 Guia: <http://guides.rubyonrails.org/active_record_validations.html>
@@ -87,13 +91,15 @@ Evolução de modelos (migrations)
 $ rails generate migration AdicionaCreditosADisciplina
 ```
 
+
+    # db/migrate/..._adiciona_creditos_a_disciplina
     class AdicionaCreditosADisciplina < ActiveRecord::Migration[5.0]
       def change
         add_column :disciplinas, :creditos, :integer
       end
     end
 
-ou (é um ou outro)
+Forma alternativa:
 
     class AdicionaCreditosADisciplina < ActiveRecord::Migration[5.0]
       def change
@@ -107,7 +113,7 @@ ou (é um ou outro)
 $ rails db:migrate
 ```
 
-Guia: <http://edgeguides.rubyonrails.org/active_record_migrations.html>
+Guia: <http://guides.rubyonrails.org/active_record_migrations.html>
 
 Relacionamento entre modelos
 ============================
