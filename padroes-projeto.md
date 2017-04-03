@@ -36,7 +36,7 @@ Na disciplina, estudaremos os seguintes padrões:
     - Strategy
     - Observer
 - Estruturais:
-    - Adapter (de classe)
+    - Adapter (de classe ou de objeto)
     - Composite
     - Decorator
 
